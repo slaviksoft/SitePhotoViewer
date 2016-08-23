@@ -1,6 +1,6 @@
 package ua.com.slaviksoft.sitephotoviewer.controllers;
 
-import android.content.Context;
+import android.support.annotation.DrawableRes;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,8 +44,6 @@ public class ImagePagerAdapter extends PagerAdapter{
         container.removeView((View) object);
     }
 
-
-
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
 
@@ -55,7 +53,6 @@ public class ImagePagerAdapter extends PagerAdapter{
         ImageButton buttonFavorite = (ImageButton) viewItem.findViewById(R.id.imageButtonFavorite);
 
         final PhotoViewAttacher attacher = new PhotoViewAttacher(photoView);
-
         final PageItem currItem = urls.get(position);
         Picasso.with(container.getContext())
                 .load(currItem.getUrl())
@@ -73,27 +70,24 @@ public class ImagePagerAdapter extends PagerAdapter{
         TextView textView = (TextView) viewItem.findViewById(R.id.textView);
         textView.setText(currItem.getTitle());
 
+        // checked favorite if used in db or unchecked in not used
         FavoritesDB db = new FavoritesDB(container.getContext());
         if (db.find(currItem))
-            buttonFavorite.setBackgroundDrawable(container.getResources().getDrawable(R.drawable.ic_favorite_yellow_checked_24dp));
+            setFavoriteIcon(buttonFavorite, true);
         else
-            buttonFavorite.setBackgroundDrawable(container.getResources().getDrawable(R.drawable.ic_favorite_yellow_unchecked_24dp));
+            setFavoriteIcon(buttonFavorite, false);
 
+        // favorite button toggle OnClick
         buttonFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Context context = v.getContext();
-
-                FavoritesDB db = new FavoritesDB(context);
-                boolean checked = db.find(currItem);
-
-                if (checked) {
+                FavoritesDB db = new FavoritesDB(v.getContext());
+                if (db.find(currItem)) {
                     db.remove(currItem);
-                    v.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_yellow_unchecked_24dp));
+                    setFavoriteIcon(v, false);
                 }else{
                     db.add(currItem);
-                    v.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.ic_favorite_yellow_checked_24dp));
+                    setFavoriteIcon(v, true);
                 }
             }
         });
@@ -103,5 +97,16 @@ public class ImagePagerAdapter extends PagerAdapter{
 
     }
 
+    private void setFavoriteIcon(View v, boolean checked){
+        if (checked)
+            setBackground(v, R.drawable.ic_favorite_yellow_checked_24dp);
+        else
+            setBackground(v, R.drawable.ic_favorite_yellow_unchecked_24dp);
+    }
+
+
+    private void setBackground(View v, @DrawableRes int id){
+        v.setBackgroundDrawable(v.getContext().getResources().getDrawable(id));
+    }
 
 }
