@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainPageActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text=""
+            android:id="@+id/buttonMinus"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:onClick="onMinusClick"
+            android:background="@drawable/ic_chevron_left_white_24dp" />
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/buttonPage"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/buttonMinus"
+            android:layout_toEndOf="@+id/buttonMinus"
+            android:text="1"
+            android:background="@color/colorPrimary"
+            android:onClick="onPageClick"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text=""
+            android:id="@+id/buttonPlus"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/buttonPage"
+            android:layout_toEndOf="@+id/buttonPage"
+            android:onClick="onPlusClick"
+            android:background="@drawable/ic_chevron_right_white_24dp" />
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:id="@+id/buttonFavorites"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/button3"
+            android:layout_toStartOf="@+id/button3"
+            android:background="@drawable/ic_favorite_white_24dp"
+            android:layout_marginRight="8dp"
+            android:onClick="onFavoritesClick"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text=""
+            android:id="@+id/button3"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:onClick="onRefreshClick"
+            android:background="@drawable/ic_cached_white_24dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerViewMainPage"
+            android:layout_below="@+id/buttonMinus"
+            android:layout_marginTop="16dp"
+            android:layout_alignParentBottom="true">
+
+        </android.support.v7.widget.RecyclerView>
+
+
+
+    </RelativeLayout>
+</RelativeLayout>
