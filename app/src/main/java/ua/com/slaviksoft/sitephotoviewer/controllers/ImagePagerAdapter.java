@@ -56,7 +56,7 @@ public class ImagePagerAdapter extends PagerAdapter{
         final PageItem currItem = urls.get(position);
         Picasso.with(container.getContext())
                 .load(currItem.getUrl())
-                .placeholder(container.getContext().getResources().getDrawable(R.drawable.ic_gallery))
+                .placeholder(container.getContext().getResources().getDrawable(R.drawable.ic_wallpaper_24dp))
                 .into(photoView, new Callback() {
                     @Override
                     public void onSuccess() {
