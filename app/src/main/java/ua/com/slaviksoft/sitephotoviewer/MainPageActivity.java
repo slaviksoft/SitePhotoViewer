@@ -56,7 +56,7 @@ public class MainPageActivity extends AppCompatActivity implements PageLoadeList
         MainPage page = new MainPage();
         page.setUrl("http://myass.ru/page/"+pageNum);
 
-        mainPageLoader = new PageLoader();
+        mainPageLoader = new PageLoader(this);
         mainPageLoader.setListener(this);
         mainPageLoader.execute(page);
 

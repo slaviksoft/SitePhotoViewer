@@ -66,7 +66,7 @@ public class ImagesActivity extends AppCompatActivity implements PageLoadeListen
         page.setUrl(item.getUrl());
         page.setHeader(item.getHeader());
 
-        mainPageLoader = new PageLoader();
+        mainPageLoader = new PageLoader(this);
         mainPageLoader.setListener(this);
         mainPageLoader.execute(page);
 
