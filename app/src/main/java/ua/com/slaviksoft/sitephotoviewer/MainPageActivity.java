@@ -2,6 +2,7 @@ package ua.com.slaviksoft.sitephotoviewer;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.drawable.NinePatchDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import ua.com.slaviksoft.sitephotoviewer.controllers.PageListAdapter;
 import ua.com.slaviksoft.sitephotoviewer.controllers.PageLoadeListener;
@@ -21,6 +23,7 @@ import ua.com.slaviksoft.sitephotoviewer.model.PageItem;
 public class MainPageActivity extends AppCompatActivity implements PageLoadeListener<MainPage>, PageListAdapter.OnItemClickListener {
 
     private RecyclerView recyclerView;
+    private ImageView imageViewEmpty;
     private GridLayoutManager layoutManager;
     private Button buttonPage;
     private PageListAdapter pagesListAdapter;
@@ -34,6 +37,8 @@ public class MainPageActivity extends AppCompatActivity implements PageLoadeList
         layoutManager = new GridLayoutManager(this, 3);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
+        imageViewEmpty = (ImageView) findViewById(R.id.imageViewEmpty);
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewMainPage);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -41,6 +46,13 @@ public class MainPageActivity extends AppCompatActivity implements PageLoadeList
         buttonPage = (Button) findViewById(R.id.buttonPage);
 
         loadPage();
+
+        NinePatchDrawable drawable = (NinePatchDrawable) getResources().getDrawable(R.drawable.ic_gallery);
+
+
+
+        Log.d("DEBUG", "ICON = "+drawable.getIntrinsicWidth()+"X"+drawable.getIntrinsicHeight());
+
     }
 
     @Override
@@ -48,6 +60,10 @@ public class MainPageActivity extends AppCompatActivity implements PageLoadeList
         Log.d("DEBUG", "event loaded");
         pagesListAdapter = new PageListAdapter(page.getItems(), this);
         recyclerView.setAdapter(pagesListAdapter);
+        if (pagesListAdapter.getItemCount() == 0)
+            imageViewEmpty.setVisibility(View.VISIBLE);
+        else
+            imageViewEmpty.setVisibility(View.GONE);
     }
 
     private void loadPage(){
@@ -89,7 +105,7 @@ public class MainPageActivity extends AppCompatActivity implements PageLoadeList
     public void onPlusClick(View view) {
         int num = getPageNum();
         num++;
-        if (num > 100) num = 100;
+        //if (num > 100) num = 100;
         setPageNum(num);
     }
 

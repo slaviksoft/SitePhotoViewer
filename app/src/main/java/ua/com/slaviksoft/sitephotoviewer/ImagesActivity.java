@@ -7,7 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -21,6 +23,7 @@ import ua.com.slaviksoft.sitephotoviewer.model.PageItem;
 public class ImagesActivity extends AppCompatActivity implements PageLoadeListener<ImagesPage>, PageListAdapter.OnItemClickListener{
 
     private RecyclerView recyclerView;
+    private ImageView imageViewEmpty;
     private StaggeredGridLayoutManager layoutManager;
     private EditText editTextPage;
     private PageListAdapter pagesListAdapter;
@@ -36,6 +39,8 @@ public class ImagesActivity extends AppCompatActivity implements PageLoadeListen
         layoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
+        imageViewEmpty = (ImageView) findViewById(R.id.imageViewEmpty);
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerViewImages);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
@@ -50,14 +55,12 @@ public class ImagesActivity extends AppCompatActivity implements PageLoadeListen
     }
 
     private void loadPageFromDb(){
-
         page = new ImagesPage();
-
         FavoritesDB db = new FavoritesDB(this);
         page.setItems(db.query());
         pagesListAdapter = new PageListAdapter(page.getItems(), this);
         recyclerView.setAdapter(pagesListAdapter);
-
+        processEmptyView();
     }
 
     private void loadPageFromUrl(PageItem item){
@@ -72,11 +75,20 @@ public class ImagesActivity extends AppCompatActivity implements PageLoadeListen
 
     }
 
+    private void processEmptyView(){
+        if (pagesListAdapter.getItemCount() == 0)
+            imageViewEmpty.setVisibility(View.VISIBLE);
+        else
+            imageViewEmpty.setVisibility(View.GONE);
+
+    }
+
     @Override
     public void onPageLoaded(ImagesPage page) {
         Log.d("DEBUG", "event loaded");
         pagesListAdapter = new PageListAdapter(page.getItems(), this);
         recyclerView.setAdapter(pagesListAdapter);
+        processEmptyView();
     }
 
     @Override

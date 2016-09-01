@@ -14,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import ua.com.slaviksoft.sitephotoviewer.R;
+import ua.com.slaviksoft.sitephotoviewer.helpers.Debuger;
 import ua.com.slaviksoft.sitephotoviewer.model.FavoritesDB;
 import ua.com.slaviksoft.sitephotoviewer.model.PageItem;
 import uk.co.senab.photoview.PhotoView;
@@ -56,7 +57,8 @@ public class ImagePagerAdapter extends PagerAdapter{
         final PageItem currItem = urls.get(position);
         Picasso.with(container.getContext())
                 .load(currItem.getUrl())
-                .placeholder(container.getContext().getResources().getDrawable(R.drawable.ic_wallpaper_24dp))
+                .placeholder(R.drawable.ic_gallery)
+                .error(R.drawable.ic_error_loading)
                 .into(photoView, new Callback() {
                     @Override
                     public void onSuccess() {
@@ -64,6 +66,7 @@ public class ImagePagerAdapter extends PagerAdapter{
                     }
                     @Override
                     public void onError() {
+                        Debuger.log(this, "error loading "+currItem.getUrl());
                     }
                 });
 

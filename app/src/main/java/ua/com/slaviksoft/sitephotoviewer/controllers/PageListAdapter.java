@@ -79,7 +79,8 @@ public class PageListAdapter extends RecyclerView.Adapter<PageListAdapter.ViewHo
                 this.title.setText(item.getTitle());
                 Picasso.with(context)
                         .load(item.getUrlImg())
-                        .placeholder(context.getResources().getDrawable(R.drawable.ic_wallpaper_24dp))
+                        .placeholder(context.getResources().getDrawable(R.drawable.ic_gallery))
+                        .error(R.drawable.ic_error_loading)
                         .into(image)
                         ;
 
